@@ -152,5 +152,5 @@ COVERAGE_FILE: "/tmp/.coverage"
 
 ## Related Docs
 
-- [Frontend README](../../documentation/FRONTEND_README.md)
-- [Backend README](../../src/api-service/README.md)
+- [Frontend README](FRONTEND_README.md)
+- [Backend README](../src/api-service/README.md)

@@ -60,7 +60,7 @@
 
 ### 1. 新增状态管理
 
-#### [daily-routine/page.tsx](src/frontend/src/app/daily-routine/page.tsx)
+#### [daily-routine/page.tsx](../../src/frontend/src/app/daily-routine/page.tsx)
 
 ```typescript
 // 存储有记录的日期
@@ -133,7 +133,7 @@ const loadMonthRoutines = async (email: string, month: Date) => {
 
 ### 4. 日期标记 CSS
 
-#### [globals.css](src/frontend/src/app/globals.css)
+#### [globals.css](../../src/frontend/src/app/globals.css)
 
 ```css
 /* 有记录的日期添加小圆点 */
@@ -296,7 +296,7 @@ const [datesWithRoutines, setDatesWithRoutines] = useState<Set<string>>(new Set(
 
 ### 更改圆点颜色
 
-修改 [globals.css](src/frontend/src/app/globals.css):
+修改 [globals.css](../../src/frontend/src/app/globals.css):
 
 ```css
 .has-routine-marker::after {

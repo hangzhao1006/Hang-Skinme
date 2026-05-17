@@ -53,13 +53,13 @@ This will start both the API service (port 8080) and frontend (port 3001).
 6. **CI/CD & Testing:**
 - Automated testing via GitHub Actions (96+ tests, 53% coverage)
 - Run tests locally: `cd src/api-service && docker-compose run --rm skincare-api pytest -v`
-- See [CI/CD Guide](documentation/CICD_README.md) for details
+- See [CI/CD Guide](../documentation/CICD_README.md) for details
 
 7. **Data Versioning:**
 - Uses DVC (Data Version Control) with GCS for dataset versioning
 - Reproduce datasets: `git checkout dataset_v1 && dvc pull` (or `dataset_v2`)
 - Data stored in: `gs://ac215-skincare/dvc_store/`
-- See [Data Versioning Guide](documentation/DATA_VERSIONING_README.md) for details
+- See [Data Versioning Guide](../documentation/DATA_VERSIONING_README.md) for details
 
 <!-- 8. **Frontend Design:**
 - [Main Interface](https://www.figma.com/make/QXckkgwHgrqKqDxDh7ZmzU/LLM-Skin-Analysis-App?node-id=0-4&t=WsUlhmhSNQd9o6Qj-1)
@@ -326,13 +326,13 @@ This system maintains user context across sessions to provide truly personalized
 
 ## What We Did? (till Milestone 3)
 ### Pipeline and Corresponding Dataset
-![data collected](./image/figma-pipeline.png)
-![figma pipeline](./image/overall-pipeline.png)
+![data collected](../image/figma-pipeline.png)
+![figma pipeline](../image/overall-pipeline.png)
 
 
 ### Screenshot of Specialized RAG running successfully with multiple dockers
-![figma pipeline](./image/docker-result-1.png)
-![figma pipeline](./image/docker-result-2.png)
+![figma pipeline](../image/docker-result-1.png)
+![figma pipeline](../image/docker-result-2.png)
 
 
 
@@ -342,7 +342,7 @@ The training process is in image\image-analyzer.ipynb)
 
 <img src="./image/facial_image.png" width="45%" style="display: inline-block; margin-right: 5%;"> <img src="./image/confusion_matrix.png" width="45%" style="display: inline-block;">
 
-![training](./image/training-loss.png)
+![training](../image/training-loss.png)
 
 
 
@@ -401,11 +401,11 @@ docker-compose run --rm skincare-api pytest -v
 
 ## Additional Documentation
 
-- [API Documentation](documentation/API_README.md) - Cloud Run deployment
-- [CI/CD Guide](documentation/CICD_README.md) - Testing pipeline
-- [Data Versioning](documentation/DATA_VERSIONING_README.md) - DVC usage
-- [FastAPI Service](documentation/FASTAPI_README.md) - API details
-- [Frontend](documentation/FRONTEND_README.md) - Next.js app
+- [API Documentation](../documentation/API_README.md) - Cloud Run deployment
+- [CI/CD Guide](../documentation/CICD_README.md) - Testing pipeline
+- [Data Versioning](../documentation/DATA_VERSIONING_README.md) - DVC usage
+- [FastAPI Service](../documentation/FASTAPI_README.md) - API details
+- [Frontend](../documentation/FRONTEND_README.md) - Next.js app
 
 ## Acknowledgments
 

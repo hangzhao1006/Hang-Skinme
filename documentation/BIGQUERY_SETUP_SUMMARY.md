@@ -57,7 +57,7 @@ BigQuery 连接测试脚本：
 
 ### 步骤 2: 配置环境变量
 
-在 [docker-compose.yml](docker-compose.yml) 的 `skincare-api` 服务中添加：
+在 [docker-compose.yml](../docker-compose.yml) 的 `skincare-api` 服务中添加：
 
 ```yaml
 environment:
@@ -311,9 +311,9 @@ pip install google-cloud-bigquery>=3.11.0
 
 ## 📚 相关文档
 
-- 详细 API 文档：[documentation/BIGQUERY_API_README.md](documentation/BIGQUERY_API_README.md)
-- Docker Compose 配置：[docker-compose.yml](docker-compose.yml)
-- 项目依赖：[src/api-service/pyproject.toml](src/api-service/pyproject.toml)
+- 详细 API 文档：[documentation/BIGQUERY_API_README.md](BIGQUERY_API_README.md)
+- Docker Compose 配置：[docker-compose.yml](../docker-compose.yml)
+- 项目依赖：[src/api-service/pyproject.toml](../src/api-service/pyproject.toml)
 
 ---
 

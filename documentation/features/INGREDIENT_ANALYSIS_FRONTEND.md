@@ -2,7 +2,7 @@
 
 ## ✅ 已完成的工作
 
-### 1. 新增页面：[src/frontend/src/app/ingredient-analysis/page.tsx](src/frontend/src/app/ingredient-analysis/page.tsx)
+### 1. 新增页面：[src/frontend/src/app/ingredient-analysis/page.tsx](../../src/frontend/src/app/ingredient-analysis/page.tsx)
 
 完整的成分分析页面，包含：
 
@@ -25,7 +25,7 @@
 
 ---
 
-### 2. 侧边栏更新：[src/frontend/src/components/layout/DashboardLayout.tsx](src/frontend/src/components/layout/DashboardLayout.tsx#L143-L156)
+### 2. 侧边栏更新：[src/frontend/src/components/layout/DashboardLayout.tsx](../../src/frontend/src/components/layout/DashboardLayout.tsx#L143-L156)
 
 **新增内容：**
 - 导入 `FlaskConical` 图标（烧瓶/化学试管图标）
@@ -39,7 +39,7 @@
 
 ---
 
-### 3. 翻译更新：[src/frontend/src/locales/translations.ts](src/frontend/src/locales/translations.ts)
+### 3. 翻译更新：[src/frontend/src/locales/translations.ts](../../src/frontend/src/locales/translations.ts)
 
 **新增翻译字段：**
 ```typescript
@@ -255,9 +255,9 @@ const [error, setError] = useState<string | null>(null);
 
 ## 📚 相关文档
 
-- 后端 API 文档：[documentation/BIGQUERY_API_README.md](documentation/BIGQUERY_API_README.md)
-- BigQuery 设置指南：[BIGQUERY_SETUP_SUMMARY.md](BIGQUERY_SETUP_SUMMARY.md)
-- 前端组件库：[src/frontend/src/components/ui/](src/frontend/src/components/ui/)
+- 后端 API 文档：[documentation/BIGQUERY_API_README.md](../BIGQUERY_API_README.md)
+- BigQuery 设置指南：[BIGQUERY_SETUP_SUMMARY.md](../BIGQUERY_SETUP_SUMMARY.md)
+- 前端组件库：[src/frontend/src/components/ui/](../../src/frontend/src/components/ui/)
 
 ---
 

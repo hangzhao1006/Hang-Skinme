@@ -115,7 +115,7 @@
 
 ### 文件修改
 
-**[dashboard/page.tsx](src/frontend/src/app/dashboard/page.tsx)**
+**[dashboard/page.tsx](../../src/frontend/src/app/dashboard/page.tsx)**
 
 ### 1. 导入
 

@@ -47,8 +47,8 @@ flowchart LR
 ```
 
 - **本地开发**：根目录 `docker-compose.yml` 启动 `skincare-api`（8080）与 `frontend`（3001），前端通过 `NEXT_PUBLIC_API_URL` 指向 API。  
-- **生产/课程部署**：见根目录 `README.md`（Milestone 5）：Pulumi 构建镜像、单 VM 或 **GKE + Nginx Ingress**（路径分流前端与 API）。  
-- **设计文档中的 Chroma 管线**：`reports/Document.3 RAG Pipeline Design and Usage.md` 描述过多容器 + Chroma 的设想；**当前主路径为 Vertex RAG Corpus**（`RAG_CORPUS` 环境变量），以 `analysis_agent` 为准。
+- **生产/课程部署**：见根目录 `../README.md`（Milestone 5）：Pulumi 构建镜像、单 VM 或 **GKE + Nginx Ingress**（路径分流前端与 API）。  
+- **设计文档中的 Chroma 管线**：`../reports/Document.3 RAG Pipeline Design and Usage.md` 描述过多容器 + Chroma 的设想；**当前主路径为 Vertex RAG Corpus**（`RAG_CORPUS` 环境变量），以 `analysis_agent` 为准。
 
 ---
 
@@ -106,7 +106,7 @@ flowchart LR
 | 产品/成分查询 API | **BigQuery** `GCP_PROJECT_ID.BIGQUERY_DATASET`（默认 `skinme`） | `products`、`ingredients`、`product_ingredients` 等表；搜索与按 ID/URL 查成分。 |
 | RAG 知识库 | **Vertex RAG Corpus** | 不在应用容器内自建向量服务（与旧 Chroma 设计区分）。 |
 
-可选：**DVC + GCS** 做数据集版本（见 `README-milestone4.md`）。
+可选：**DVC + GCS** 做数据集版本（见 `../reports/MILESTONE_4.md`）。
 
 ---
 
@@ -137,16 +137,16 @@ flowchart LR
 ## 8. 部署与环境变量（速查）
 
 - **Compose**：见 `docker-compose.yml` — `GCP_PROJECT`、`GOOGLE_CLOUD_LOCATION`、`BUCKET_NAME`、`RAG_CORPUS`、`BIGQUERY_DATASET`、`DATA_SOURCE`、`DB_*`（sql 模式）、端口映射。  
-- **K8s / VM**：`src/deployment/` 下 Pulumi 栈；根 `README.md` 含 sslip.io、Ingress 路径、`/api-service` 与前端分流等说明。  
+- **K8s / VM**：`src/deployment/` 下 Pulumi 栈；根 `../README.md` 含 sslip.io、Ingress 路径、`/api-service` 与前端分流等说明。  
 - **敏感信息**：勿将真实密码提交仓库；compose 中的 `DB_PASSWORD` 等仅作本地示例，生产用 Secret。
 
 ---
 
 ## 9. 与现有文档的关系
 
-- **`README-milestone4.md`**：端到端 RAG 工作流、个性化、测试与 DVC 等，可与本文对照阅读。  
-- **`README.md`**：以 **部署与 Pulumi/K8s** 为主。  
-- **`reports/Document.3*.md`**：早期多容器 + Chroma 的 RAG 管线设计；理解历史方案时有用，**实现以 Vertex + 本 README 第 3 节为准**。
+- **`../reports/MILESTONE_4.md`**：端到端 RAG 工作流、个性化、测试与 DVC 等，可与本文对照阅读。  
+- **`../README.md`**：以 **部署与 Pulumi/K8s** 为主。  
+- **`../reports/Document.3*.md`**：早期多容器 + Chroma 的 RAG 管线设计；理解历史方案时有用，**实现以 Vertex + 本 README 第 3 节为准**。
 
 ---
 
@@ -158,4 +158,4 @@ flowchart LR
 
 ---
 
-*文档生成：基于仓库当前源码与 `README-milestone4.md`、`README.md`、`reports/Document.3 RAG Pipeline Design and Usage.md`。*
+*文档生成：基于仓库当前源码与 `../reports/MILESTONE_4.md`、`../README.md`、`../reports/Document.3 RAG Pipeline Design and Usage.md`。*

@@ -49,7 +49,7 @@ Gemini 分析数据后提供：
 
 ### 后端实现
 
-#### 1. 成分分析器 ([ingredient_analyzer.py](src/api-service/agent/ingredient_analyzer.py))
+#### 1. 成分分析器 ([ingredient_analyzer.py](../../src/api-service/agent/ingredient_analyzer.py))
 
 ```python
 class IngredientAnalyzer:
@@ -421,7 +421,7 @@ output_lang = lang_instructions.get(language, "English")
 
 - [每日护肤记录功能](./DAILY_ROUTINE_FEATURE.md)
 - [成分使用趋势指南](./ROUTINE_TRENDS_GUIDE.md)
-- [BigQuery API文档](./BIGQUERY_API_README.md)
+- [BigQuery API文档](../BIGQUERY_API_README.md)
 - [Gemini API文档](https://ai.google.dev/docs)
 
 ---

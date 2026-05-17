@@ -42,7 +42,7 @@
 
 ### 后端 | Backend
 
-#### 1. [src/api-service/agent/daily_routine_manager.py](src/api-service/agent/daily_routine_manager.py)
+#### 1. [src/api-service/agent/daily_routine_manager.py](../../src/api-service/agent/daily_routine_manager.py)
 
 **功能：** 管理 GCS 中的每日护肤记录
 
@@ -87,7 +87,7 @@ class DailyRoutineManager:
 
 ---
 
-#### 2. [src/api-service/api-service/main.py](src/api-service/api-service/main.py)
+#### 2. [src/api-service/api-service/main.py](../../src/api-service/api-service/main.py)
 
 **新增 API 端点：**
 
@@ -228,7 +228,7 @@ GET /api/routines/user@example.com/2025-12-11/ingredients
 
 ### 前端 | Frontend
 
-#### 1. [src/frontend/src/app/daily-routine/page.tsx](src/frontend/src/app/daily-routine/page.tsx)
+#### 1. [src/frontend/src/app/daily-routine/page.tsx](../../src/frontend/src/app/daily-routine/page.tsx)
 
 **页面结构：**
 
@@ -302,7 +302,7 @@ const handleSaveRoutine = async () => {
 
 ---
 
-#### 2. [src/frontend/src/components/layout/DashboardLayout.tsx](src/frontend/src/components/layout/DashboardLayout.tsx)
+#### 2. [src/frontend/src/components/layout/DashboardLayout.tsx](../../src/frontend/src/components/layout/DashboardLayout.tsx)
 
 **新增侧边栏按钮：**
 
@@ -327,7 +327,7 @@ import { Calendar } from 'lucide-react';
 
 ---
 
-#### 3. [src/frontend/src/locales/translations.ts](src/frontend/src/locales/translations.ts)
+#### 3. [src/frontend/src/locales/translations.ts](../../src/frontend/src/locales/translations.ts)
 
 **新增翻译：**
 
@@ -617,10 +617,10 @@ class SaveRoutineRequest(BaseModel):
 
 ## 📚 相关文档 | Related Documentation
 
-- [BigQuery API 文档](./BIGQUERY_API_README.md)
+- [BigQuery API 文档](../BIGQUERY_API_README.md)
 - [成分分析功能](./INGREDIENT_ANALYSIS_FRONTEND.md)
-- [前端架构](./FRONTEND_README.md)
-- [数据版本控制](./DATA_VERSIONING_README.md)
+- [前端架构](../FRONTEND_README.md)
+- [数据版本控制](../DATA_VERSIONING_README.md)
 
 ---
 
