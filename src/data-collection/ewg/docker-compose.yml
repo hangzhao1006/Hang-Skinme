@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  ewg-scraper:
+    build: .
+    image: ewg-scraper:latest
+    container_name: ewg-scraper
+    volumes:
+      - ./output:/app/output
+      - ./ewg_urls.json:/app/ewg_urls.json
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python --version
+    restart: "no"
+  scrape-face:
+    build: .
+    image: ewg-scraper:latest
+    volumes:
+      - ./output:/app/output
+    command: >
+      python ewg_scrape.py
+      --category https://www.ewg.org/skindeep/browse/category/Face/
+      --out_jsonl /app/output/ewg_face.jsonl
+      --out_csv /app/output/ewg_face.csv
+      --state /app/output/ewg_face.state.json
+      --base_delay 3.0
+      --max_pages 50
+    restart: "no"
+    profiles:
+      - scraping
+
+  preprocess:
+    build: .
+    image: ewg-scraper:latest
+    volumes:
+      - ./output:/app/output
+    command: >
+      python ewg_preprocess.py
+      --in_jsonl /app/output/ewg_face.jsonl
+      --out_jsonl /app/output/ewg_face_structured.jsonl
+      --out_csv /app/output/ewg_face_structured.csv
+    restart: "no"
+    depends_on:
+      - scrape-face
+    profiles:
+      - processing

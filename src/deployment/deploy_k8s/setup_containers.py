@@ -1,0 +1,246 @@
+"""
+frontend: 3001 (revised from 3000)
+api service: 8080 (revised from 9000)
+"""
+
+import os
+
+import pulumi
+
+# import pulumi_gcp as gcp
+# from pulumi import StackReference, ResourceOptions, Output
+import pulumi_kubernetes as k8s
+
+
+def setup_containers(project, namespace, k8s_provider, ksa_name, app_name):
+    # Get image references from deploy_images stack
+    # For local backend, use: "organization/project/stack"
+    images_stack = pulumi.StackReference("organization/deploy-images/dev")
+    # Get the image tags (these are arrays, so we take the first element)
+    api_service_tag = images_stack.get_output("skincare-app-api-service-tags")
+    frontend_tag = images_stack.get_output("skincare-app-frontend-tags")
+
+    # General persistent storage for application data (5Gi)
+    persistent_pvc = k8s.core.v1.PersistentVolumeClaim(
+        "persistent-pvc",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name="persistent-pvc",
+            namespace=namespace.metadata.name,
+        ),
+        spec=k8s.core.v1.PersistentVolumeClaimSpecArgs(
+            access_modes=["ReadWriteOnce"],  # Single pod read/write access
+            resources=k8s.core.v1.VolumeResourceRequirementsArgs(
+                requests={"storage": "5Gi"},  # Request 5GB of persistent storage
+            ),
+        ),
+        opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[namespace]),
+    )
+
+    # --- Frontend Deployment ---
+    # Creates pods running the frontend container on port 3001
+    frontend_deployment = k8s.apps.v1.Deployment(
+        "frontend",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name="frontend",
+            namespace=namespace.metadata.name,
+        ),
+        spec=k8s.apps.v1.DeploymentSpecArgs(
+            selector=k8s.meta.v1.LabelSelectorArgs(
+                match_labels={"run": "frontend"},  # Select pods with this label
+            ),
+            template=k8s.core.v1.PodTemplateSpecArgs(
+                metadata=k8s.meta.v1.ObjectMetaArgs(
+                    labels={"run": "frontend"},  # Label assigned to pods
+                ),
+                spec=k8s.core.v1.PodSpecArgs(
+                    containers=[
+                        k8s.core.v1.ContainerArgs(
+                            name="frontend",
+                            image=frontend_tag.apply(lambda tags: tags[0]),  # Container image
+                            image_pull_policy="Always",  # Always pull latest image
+                            ports=[
+                                k8s.core.v1.ContainerPortArgs(
+                                    container_port=3001,  # Frontend app listens on port 3001
+                                    protocol="TCP",
+                                )
+                            ],
+                            resources=k8s.core.v1.ResourceRequirementsArgs(
+                                requests={"cpu": "250m", "memory": "2Gi"},
+                                limits={"cpu": "500m", "memory": "3Gi"},
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+        ),
+        opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[namespace]),
+    )
+
+    frontend_service = k8s.core.v1.Service(
+        "frontend-service",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name="frontend",
+            namespace=namespace.metadata.name,
+        ),
+        spec=k8s.core.v1.ServiceSpecArgs(
+            type="ClusterIP",  # Internal only - not exposed outside cluster
+            ports=[
+                k8s.core.v1.ServicePortArgs(
+                    port=3001,  # Service port
+                    target_port=3001,  # Container port to forward to
+                    protocol="TCP",
+                )
+            ],
+            selector={"run": "frontend"},  # Route traffic to pods with this label
+        ),
+        opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[frontend_deployment]),
+    )
+
+    # api_service Deployment
+    api_deployment = k8s.apps.v1.Deployment(
+        "api",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name="api",
+            namespace=namespace.metadata.name,
+        ),
+        spec=k8s.apps.v1.DeploymentSpecArgs(
+            selector=k8s.meta.v1.LabelSelectorArgs(
+                match_labels={"run": "api"},
+            ),
+            template=k8s.core.v1.PodTemplateSpecArgs(
+                metadata=k8s.meta.v1.ObjectMetaArgs(
+                    labels={"run": "api"},
+                ),
+                spec=k8s.core.v1.PodSpecArgs(
+                    service_account_name=ksa_name,  # Use KSA for Workload Identity (GCP access)
+                    security_context=k8s.core.v1.PodSecurityContextArgs(
+                        fs_group=1000,
+                    ),
+                    volumes=[
+                        k8s.core.v1.VolumeArgs(
+                            name="persistent-vol",
+                            persistent_volume_claim=k8s.core.v1.PersistentVolumeClaimVolumeSourceArgs(
+                                claim_name=persistent_pvc.metadata.name,
+                            ),
+                        )
+                    ],
+                    containers=[
+                        k8s.core.v1.ContainerArgs(
+                            name="api",
+                            image=api_service_tag.apply(lambda tags: tags[0]),  # API container image
+                            image_pull_policy="IfNotPresent",
+                            ports=[
+                                k8s.core.v1.ContainerPortArgs(
+                                    container_port=8080,  # API server port
+                                    protocol="TCP",
+                                )
+                            ],
+                            volume_mounts=[
+                                k8s.core.v1.VolumeMountArgs(
+                                    name="persistent-vol",
+                                    mount_path="/persistent",
+                                )
+                            ],
+                            env=[
+                                # k8s.core.v1.EnvVarArgs(
+                                #     name="NEXTAUTH_URL",
+                                #     value=host.apply(lambda h: f"http://{h}")
+                                # ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="GCS_BUCKET_NAME",
+                                    value="skincare-app-models",  # GCS bucket for ML models
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="GCP_PROJECT",
+                                    value=project,
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="PORT",
+                                    value="8080",
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="ROOT_PATH",
+                                    value="/api-service",
+                                ),
+                                # LLM and RAG configuration
+                                k8s.core.v1.EnvVarArgs(
+                                    name="GOOGLE_CLOUD_LOCATION",
+                                    value="us-east4",  # Vertex AI location
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="RAG_CORPUS",
+                                    value="projects/ac215-herm/locations/us-east4/ragCorpora/4611686018427387904",
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="BUCKET_NAME",
+                                    value="ac215-skincare",  # GCS bucket for user data
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="GCS_IMAGE_PREFIX",
+                                    value="user_image",  # Prefix for user images in GCS
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="GEMINI_MODEL",
+                                    value="gemini-2.0-flash",  # Gemini model version
+                                ),
+                                # Data source mode: "jsonl" or "sql"
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DATA_SOURCE",
+                                    value="jsonl",  # Change to "sql" to use database instead of JSONL
+                                ),
+                                # Database configuration for PostgreSQL (only used when DATA_SOURCE=sql)
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_INSTANCE",
+                                    value="free-trial-first-project",
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_NAME",
+                                    value="postgres",
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_USER",
+                                    value="postgres",
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_PASSWORD",
+                                    value=os.getenv("DB_PASSWORD", ""),
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_HOST",
+                                    value="localhost",  # Use Cloud SQL Proxy sidecar
+                                ),
+                                k8s.core.v1.EnvVarArgs(
+                                    name="DB_PORT",
+                                    value="5432",
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ),
+        ),
+        opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[namespace]),
+    )
+
+    # api_service Service
+    api_service = k8s.core.v1.Service(
+        "api-service",
+        metadata=k8s.meta.v1.ObjectMetaArgs(
+            name="api",
+            namespace=namespace.metadata.name,
+        ),
+        spec=k8s.core.v1.ServiceSpecArgs(
+            type="ClusterIP",  # Internal only
+            ports=[
+                k8s.core.v1.ServicePortArgs(
+                    port=8080,
+                    target_port=8080,
+                    protocol="TCP",
+                )
+            ],
+            selector={"run": "api"},
+        ),
+        opts=pulumi.ResourceOptions(provider=k8s_provider, depends_on=[api_deployment]),
+    )
+
+    return frontend_service, api_service

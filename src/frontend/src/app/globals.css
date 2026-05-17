@@ -1,0 +1,731 @@
+/**
+ * SkinMe AI - Medical-Grade Minimalist UI
+ * Clinical Purity Design System
+ * Updated: 2025-12-07
+ */
+
+/* stylelint-disable at-rule-no-unknown */
+/* Tailwind Layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
+
+/* ========================================
+   Base Layer - HTML & Body Setup
+   ======================================== */
+@layer base {
+  * {
+    /* 确保所有元素边框颜色使用 Tailwind 的 border-color */
+    @apply border-border;
+  }
+
+  :root {
+    /* ========================================
+       Medical-Grade Color System (HSL Variables)
+       严格遵循临床医学色彩规范
+       ======================================== */
+
+    /* 背景色系 - Clinical White & Pure White */
+    --background: 0 0% 100%; /* #FFFFFF - 纯白 (主背景) */
+    --foreground: 0 0% 13%; /* #212121 - 深炭灰/Deep Charcoal (主文字) */
+
+    /* 卡片系统 - Elevated Surfaces */
+    --card: 0 0% 100%; /* #FFFFFF - 纯白/Pure White (卡片、导航栏) */
+    --card-foreground: 0 0% 13%; /* #212121 - 深炭灰 */
+
+    /* 弹出层 - Popover */
+    --popover: 0 0% 100%; /* #FFFFFF - 纯白 */
+    --popover-foreground: 0 0% 13%; /* #212121 - 深炭灰 */
+
+    /* 主色调 - Elegant Slate Gradient (医疗级灰) */
+    --primary: 215 19% 34%; /* Slate 600 为基调 (按钮、重点交互) */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - 白色文字 */
+    --primary-hover: 215 25% 27%; /* Slate 700 (悬停状态) */
+
+    /* 次要色调 - 温和灰蓝 (用于少量强调) */
+    --secondary: 215 16% 47%; /* Slate 500 */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF - 白色文字 */
+
+    /* 静音/次要文字 - Medium Gray */
+    --muted: 215 11% 45%; /* 临床中灰 (次要信息) */
+    --muted-foreground: 215 11% 45%;
+
+    /* 点缀色 - 轻盈浅灰 (配合粉/青渐变做衬底) */
+    --accent: 214 32% 91%; /* Slate 200 */
+    --accent-foreground: 215 25% 27%; /* Slate 700 */
+
+    /* 警示色 - Error/Destructive */
+    --destructive: 0 84.2% 60.2%; /* #EF4444 - 标准红色 */
+    --destructive-foreground: 0 0% 98%; /* #FAFAFA - 临床白 */
+
+    /* 边框与输入框 - Minimal Borders */
+    --border: 214 32% 91%; /* Slate 200 - 极淡灰色边框 */
+    --input: 214 32% 91%; /* Slate 200 */
+    --ring: 215 19% 34%; /* 与主色一致的聚焦描边 */
+
+    /* 侧边栏配色 - Clinical Navigation */
+    --sidebar: 0 0% 100%; /* #FFFFFF - 纯白 */
+    --sidebar-foreground: 0 0% 13%; /* #212121 - 深炭灰 */
+    --sidebar-primary: 215 19% 34%; /* Slate 主色 */
+    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - 白色 */
+    --sidebar-accent: 192 100% 19%; /* #004D61 - 深海绿 */
+    --sidebar-accent-foreground: 0 0% 100%; /* #FFFFFF - 白色 */
+    --sidebar-border: 0 0% 93%; /* #EDEDED - 极淡灰色 */
+    --sidebar-ring: 217 62% 54%; /* #4077D1 - 静谧蓝 */
+
+    /* 数据可视化配色 - Pastel Clinical */
+    --chart-1: 215 19% 34%; /* Slate */
+    --chart-2: 183 100% 85%; /* 轻盈青色 */
+    --chart-3: 325 78% 95%; /* 柔和粉色 */
+    --chart-4: 214 32% 78%; /* 浅灰蓝 */
+    --chart-5: 0 0% 25%;  /* 深炭灰 */
+
+    /* Border Radius System - Pill Shape Buttons */
+    --radius: 9999px; /* Full rounded / Pill shape (default for buttons) */
+    --radius-xs: 0.25rem; /* 4px */
+    --radius-sm: 0.5rem; /* 8px */
+    --radius-md: 0.75rem; /* 12px */
+    --radius-lg: 1rem; /* 16px */
+    --radius-xl: 1.25rem; /* 20px */
+    --radius-2xl: 1.5rem; /* 24px */
+    --radius-3xl: 2rem; /* 32px */
+    --radius-card: 1rem; /* 16px - 专用于卡片的圆角 */
+
+    /* Typography System */
+    --text-xs: 0.75rem; /* 12px */
+    --text-xs--line-height: 1rem; /* 16px */
+    --text-sm: 0.875rem; /* 14px */
+    --text-sm--line-height: 1.25rem; /* 20px */
+    --text-base: 1rem; /* 16px */
+    --text-base--line-height: 1.5rem; /* 24px */
+    --text-lg: 1.125rem; /* 18px */
+    --text-lg--line-height: 1.75rem; /* 28px */
+    --text-xl: 1.25rem; /* 20px */
+    --text-xl--line-height: 1.75rem; /* 28px */
+    --text-2xl: 1.5rem; /* 24px */
+    --text-2xl--line-height: 2rem; /* 32px */
+    --text-3xl: 1.875rem; /* 30px */
+    --text-3xl--line-height: 2.25rem; /* 36px */
+    --text-4xl: 2.25rem; /* 36px */
+    --text-4xl--line-height: 2.5rem; /* 40px */
+    --text-5xl: 3rem; /* 48px */
+    --text-5xl--line-height: 1; /* 48px */
+    --text-6xl: 3.75rem; /* 60px */
+    --text-6xl--line-height: 1; /* 60px */
+
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --tracking-tight: -0.02em;
+    --tracking-wide: 0.02em;
+
+    --leading-tight: 1.25;
+    --leading-relaxed: 1.625;
+
+    /* Spacing System */
+    --spacing: 0.25rem; /* 4px */
+
+    /* Effects & Filters */
+    --blur-sm: 8px;
+    --blur-md: 12px;
+    --blur-2xl: 40px;
+    --blur-3xl: 64px;
+
+    /* Animation & Transitions */
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --default-transition-duration: 150ms;
+
+    /* Font Family */
+    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  html {
+    /* 手机端使用更小的基础字体 */
+    font-size: 14px;
+    scroll-behavior: smooth;
+    height: 100%;
+    -webkit-overflow-scrolling: touch; /* mobile momentum/bounce */
+    overscroll-behavior-y: contain;
+  }
+
+  /* 平板及以上恢复正常字体 */
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    /* 防止内容跳动 */
+    overflow-x: hidden;
+  }
+
+  /* 防止hydration时的闪烁和跳动 */
+  body:not(.hydrated) {
+    /* 在hydration完成前隐藏可能导致跳动的元素 */
+    visibility: visible;
+  }
+
+  /* 确保容器在加载时保持稳定尺寸 */
+  img, video, iframe {
+    content-visibility: auto;
+  }
+
+  /* ========================================
+     Typography Base Styles - Medical Grade
+     使用 font-medium 或 font-normal，避免 font-bold
+     ======================================== */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight;
+  }
+
+  /* Typography when no Tailwind classes applied */
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+/* ========================================
+   Component Layer - Reusable Patterns
+   ======================================== */
+@layer components {
+  /* ----------------------------------------
+     Header Components
+     ---------------------------------------- */
+  .header-wrapper {
+    @apply fixed w-full top-0 z-50 border-b backdrop-blur-md;
+    background-color: color-mix(in srgb, var(--background) 80%, transparent);
+  }
+
+  .header-container {
+    @apply bg-background;
+  }
+
+  .header-content {
+    @apply container mx-auto px-4 h-16 flex items-center justify-between;
+  }
+
+  .header-logo {
+    @apply text-foreground hover:text-primary transition-colors flex items-center gap-2;
+  }
+
+  /* ----------------------------------------
+     Navigation Components
+     ---------------------------------------- */
+  .nav-desktop {
+    @apply hidden md:flex items-center gap-1;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground
+           hover:text-foreground hover:bg-accent transition-all;
+  }
+
+  .nav-link-active {
+    @apply bg-accent text-foreground font-medium;
+  }
+
+  /* ----------------------------------------
+     Mobile Safe Area Helpers
+     ---------------------------------------- */
+  .mobile-safe-padding {
+    /* 默认使用桌面/常规浏览器的间距 */
+    padding-top: var(--safe-padding-desktop, 0px);
+  }
+
+  /* 仅在 PWA/安装形态下使用安全区 */
+  @media (display-mode: standalone) {
+    .mobile-safe-padding {
+      padding-top: var(--safe-padding-mobile, env(safe-area-inset-top, 0px));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-safe-padding {
+      padding-top: var(--safe-padding-desktop, 0px);
+    }
+  }
+
+  .mobile-safe-top {
+    /* 默认使用桌面/常规浏览器的间距 */
+    top: var(--safe-top-desktop, 0px);
+  }
+
+  /* 仅在 PWA/安装形态下使用安全区 */
+  @media (display-mode: standalone) {
+    .mobile-safe-top {
+      top: var(--safe-top-mobile, env(safe-area-inset-top, 0px));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-safe-top {
+      top: var(--safe-top-desktop, auto);
+    }
+  }
+
+  .nav-icon-wrapper {
+    @apply flex items-center justify-center;
+  }
+
+  .nav-text {
+    @apply text-sm;
+  }
+
+  /* ----------------------------------------
+     Mobile Menu
+     ---------------------------------------- */
+  .mobile-menu-button {
+    @apply md:hidden p-2 hover:bg-accent rounded-md transition-colors;
+  }
+
+  .mobile-menu {
+    @apply absolute top-16 left-0 right-0 bg-background md:hidden border-b
+           transform transition-transform duration-300 ease-in-out;
+  }
+
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-black/20 md:hidden z-40;
+  }
+
+  /* ----------------------------------------
+     Page Sections
+     ---------------------------------------- */
+  .content-section {
+    @apply container mx-auto px-4 py-8;
+  }
+
+  /* ----------------------------------------
+     Footer Components
+     ---------------------------------------- */
+  .footer {
+    @apply w-full border-t py-6 mt-auto bg-background;
+  }
+
+  .footer-text {
+    @apply text-center text-muted-foreground text-sm;
+  }
+
+  /* ----------------------------------------
+     Card Components - Borderless Elevation
+     无边框设计，仅使用极淡投影创造层次
+     ---------------------------------------- */
+  .card {
+    @apply bg-card text-card-foreground shadow-card;
+    border-radius: var(--radius-card); /* 使用专用卡片圆角 16px */
+    border: none; /* 完全无边框 */
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply text-2xl font-medium leading-none tracking-tight;
+  }
+
+  .card-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply flex items-center p-6 pt-0;
+  }
+}
+
+/* ========================================
+   Utilities Layer - Helper Classes
+   ======================================== */
+@layer utilities {
+  /* ----------------------------------------
+     Minimal Text Effects - No Gradients
+     禁止使用渐变文字，保持纯色
+     ---------------------------------------- */
+  .clinical-text {
+    @apply text-foreground; /* 纯色文字，无渐变 */
+  }
+
+  /* ----------------------------------------
+     Minimal Effects - 移除玻璃态效果
+     临床风格不使用玻璃态，使用纯色+投影
+     ---------------------------------------- */
+
+  /* ----------------------------------------
+     Custom Scrollbar
+     ---------------------------------------- */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-slate-800 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-600 rounded-full hover:bg-slate-400 dark:hover:bg-slate-500;
+  }
+
+  /* ----------------------------------------
+     Animation Keyframes
+     ---------------------------------------- */
+
+  /* 动画已在 tailwind.config.js 中定义，并直接通过 Tailwind 类使用。
+     此处移除所有旧的 @keyframes 和 .animate-* 定义。
+     仅保留 custom-scrollbar，因为它不是动画。
+  */
+
+  /* 淡入动画，防止内容闪烁 */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* 防止widget容器在加载时跳动 */
+  .aspect-square {
+    min-height: 200px;
+  }
+
+  @media (min-width: 640px) {
+    .aspect-square {
+      min-height: 230px;
+    }
+  }
+
+  /* 防止图片加载时的布局偏移 */
+  img[src] {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  img:not([src]), img[src=""] {
+    opacity: 0;
+  }
+
+  /* Skeleton loading样式 - 防止内容跳动 */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(226, 232, 240, 0.2) 0%,
+      rgba(226, 232, 240, 0.4) 50%,
+      rgba(226, 232, 240, 0.2) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* 防止hydration时的内容闪烁 */
+  .prevent-flicker {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
+  }
+
+  /* ----------------------------------------
+     Animation Delays
+     ---------------------------------------- */
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  .delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+/* ========================================
+   Markdown Styling for react-markdown
+   ======================================== */
+@layer base {
+  .prose {
+    @apply text-gray-700 dark:text-gray-300 max-w-none;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    @apply font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2;
+  }
+
+  .prose h1 { font-size: var(--text-2xl); }
+  .prose h2 { font-size: var(--text-xl); }
+  .prose h3 { font-size: var(--text-lg); }
+
+  .prose p {
+    @apply mb-3 leading-relaxed;
+  }
+
+  .prose strong {
+    @apply font-semibold text-gray-900 dark:text-gray-100;
+  }
+
+  .prose em {
+    @apply italic;
+  }
+
+  .prose ul, .prose ol {
+    @apply my-3 ml-4 space-y-1;
+  }
+
+  .prose li {
+    @apply leading-relaxed;
+  }
+
+  .prose ul li {
+    @apply list-disc;
+  }
+
+  .prose ol li {
+    @apply list-decimal;
+  }
+
+  .prose code {
+    @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono;
+    color: hsl(var(--primary)); /* Light mode color */
+  }
+  .dark .prose code {
+    @apply bg-gray-800;
+    color: hsl(var(--primary) / 0.7); /* Dark mode color with transparency */
+  }
+
+  .prose pre {
+    @apply bg-gray-100 dark:bg-gray-800 p-3 rounded-lg overflow-x-auto my-3;
+  }
+
+  /* 确保 pre 内部的 code 颜色与 prose code 保持一致 */
+  .prose pre code {
+    @apply bg-transparent p-0;
+    color: hsl(var(--primary)); /* Light mode color */
+  }
+  .dark .prose pre code {
+    color: hsl(var(--primary) / 0.7); /* Dark mode color with transparency */
+  }
+
+  .prose blockquote {
+    @apply border-l-4 pl-4 italic text-gray-600 my-3;
+    border-color: hsl(var(--primary) / 0.5); /* 直接设置边框颜色和透明度 */
+  }
+  .dark .prose blockquote {
+    @apply text-gray-400; /* Dark mode text color */
+  }
+
+  .prose a {
+    @apply hover:underline;
+    color: hsl(var(--primary)); /* 链接使用雅致石板色 */
+  }
+
+  .prose table {
+    @apply w-full border-collapse my-3;
+  }
+
+  .prose th {
+    @apply border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800
+           px-3 py-2 font-semibold;
+  }
+
+  .prose td {
+    @apply border border-gray-300 dark:border-gray-600 px-3 py-2;
+  }
+
+  .prose hr {
+    @apply my-4 border-gray-300 dark:border-gray-600;
+  }
+
+  /* Dark mode adjustments for prose */
+  .prose-invert {
+    @apply text-gray-300;
+  }
+
+  .prose-invert h1, .prose-invert h2, .prose-invert h3, .prose-invert h4 {
+    @apply text-gray-100;
+  }
+
+  .prose-invert strong {
+    @apply text-gray-100;
+  }
+
+  .prose-invert code {
+    @apply bg-gray-800;
+    color: hsl(var(--primary) / 0.7); /* Since prose-invert implies dark mode */
+  }
+
+  .prose-invert pre {
+    @apply bg-gray-800;
+  }
+}
+
+/* Simple fade-in for page transitions */
+.page-fade {
+  animation: pageFade 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chat section fade-in */
+.chat-fade {
+  animation: chatFade 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes chatFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scrolling for chat container */
+.chat-scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   iOS Safe Area Support
+   ======================================== */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 2px);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 2px);
+}
+
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 2px);
+}
+
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 2px);
+}
+
+.mt-safe {
+  margin-top: env(safe-area-inset-top, 2px);
+}
+
+.h-screen-safe {
+  height: calc(100vh - env(safe-area-inset-top, 2px) - env(safe-area-inset-bottom, 2px));
+}
+
+/* ========================================
+   Calendar Date Markers
+   ======================================== */
+.has-routine-marker {
+  position: relative;
+}
+
+.has-routine-marker::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: hsl(var(--primary));
+}

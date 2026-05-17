@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+RUN set -ex; \
+    apk update && \
+    apk add --no-cache bash curl && \
+    mkdir -p /app
+
+WORKDIR /app
+
+# 复制package文件
+COPY package*.json ./
+
+# 安装依赖
+RUN npm install
+
+# 复制所有文件
+COPY . .
+
+EXPOSE 3001
+
+# 开发模式启动
+CMD ["npm", "run", "dev"]

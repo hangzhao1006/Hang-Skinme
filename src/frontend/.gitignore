@@ -1,0 +1,25 @@
+node_modules/
+.next/
+out/
+
+# Capacitor
+ios/App/Pods/
+ios/App/*.xcworkspace
+android/.gradle
+android/build
+android/app/build
+*.orig.*
+
+# misc
+.DS_Store
+env.local
+.eslintcache
+scratch.txt
+
+# Analysis reports (generated files)
+*-report.json
+deep-analysis-report.json
+unused-resources-report.json
+
+# TypeScript build cache
+tsconfig.tsbuildinfo

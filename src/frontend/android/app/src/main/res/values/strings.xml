@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SkinMe AI</string>
+    <string name="title_activity_main">SkinMe AI</string>
+    <string name="package_name">com.skinme.app</string>
+    <string name="custom_url_scheme">com.skinme.app</string>
+</resources>

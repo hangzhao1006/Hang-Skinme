@@ -1,0 +1,81 @@
+networks:
+    skincare-network:
+        driver: bridge
+
+services:
+    # llm-rag-cli:
+    #     build:
+    #         context: ./src/api-service
+    #         dockerfile: Dockerfile
+    #     image: llm-rag-cli
+    #     container_name: llm-rag-cli
+    #     volumes:
+    #         - ../secrets:/secrets
+    #         - ./input-dataset:/app/data
+    #         - ./src:/app/src
+    #     environment:
+    #         GOOGLE_APPLICATION_CREDENTIALS: /secrets/llm-service-account.json
+    #         GCP_PROJECT: ac215-herm
+    #         GOOGLE_CLOUD_LOCATION: us-east4
+    #         BUCKET_NAME: ac215-skincare
+    #         RAG_CORPUS: projects/816656062955/locations/us-east4/ragCorpora/4611686018427387904
+    #         GOOGLE_GENAI_USE_VERTEXAI: "true"
+    #         AUTO_RUN: "true"
+    #     stdin_open: true
+    #     tty: true
+    #     command: ["python", "routing_agent.py"]
+
+    skincare-api:
+        platform: linux/amd64
+        build:
+            context: ./src/api-service
+            dockerfile: Dockerfile
+        image: skincare-api
+        container_name: skincare-api
+        ports:
+            - "8080:8080"
+        volumes:
+            - ../secrets:/secrets
+            - ./src:/app/src
+        environment:
+            GOOGLE_APPLICATION_CREDENTIALS: /secrets/llm-service-account.json
+            GCP_PROJECT: hang-app-481022
+            GOOGLE_CLOUD_LOCATION: us-south1
+            GCP_PROJECT_ID: hang-app-481022
+            BIGQUERY_DATASET: skinme
+            BUCKET_NAME: hang-skinme
+            GCS_IMAGE_PREFIX: user_image
+            IMAGE_DOWNLOAD_DIR: /tmp/user_images
+            RAG_CORPUS: projects/hang-app-481022/locations/us-south1/ragCorpora/2305843009213693952
+            GOOGLE_GENAI_USE_VERTEXAI: "true"
+            GEMINI_MODEL: "gemini-2.5-flash"
+            DATA_SOURCE: "jsonl"  # Change to "sql" to use database instead of JSONL
+            # Database configuration (only used when DATA_SOURCE=sql)
+            DB_INSTANCE: free-trial-first-project
+            DB_NAME: postgres
+            DB_USER: postgres
+            DB_PASSWORD: ${DB_PASSWORD:-changeme}
+            DB_HOST: host.docker.internal  # For Mac/Windows to access host machine
+            DB_PORT: "5432"
+        networks:
+            - skincare-network
+
+    frontend:
+        build:
+            context: ./src/frontend
+            dockerfile: Dockerfile.dev
+        container_name: skincare-frontend
+        ports:
+            - "3001:3001"
+        volumes:
+            - ./src/frontend:/app
+            - /app/.next
+            - /app/node_modules
+        environment:
+            - NEXT_PUBLIC_API_URL=http://localhost:8080
+            - WATCHPACK_POLLING=true
+            - CHOKIDAR_USEPOLLING=true
+        depends_on:
+            - skincare-api
+        networks:
+            - skincare-network

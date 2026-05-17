@@ -1,0 +1,8 @@
+encryptionsalt: v1:nd0iYrqpQcU=:v1:p4LEEKEKLtvAFXWo:ifKvq6qaM5jUvyNGrWfGVMqJaqPc5w==
+config:
+  gcp:project: ac215-herm
+  security:ssh_user: sa_108514330499178447129
+  security:gcp_service_account_email: deployment@ac215-herm.iam.gserviceaccount.com
+  security:gcp_ksa_service_account_email: deployment@ac215-herm.iam.gserviceaccount.com
+  deploy-k8s:setupSSL: "false"
+  deploy-k8s:domain: "skinthecode.com"
